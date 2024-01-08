@@ -1,0 +1,24 @@
+.home {
+    width: 100%;
+    height: 83vh;
+}
+
+.home h1 {
+    font-size: 60px;
+}
+
+.home p {
+    text-align: justify;
+    text-justify: inter-word;
+}
+
+.home-btn {
+    background-color: rgb(87, 87, 236);
+    border-radius: 7px;
+    height: 40px;
+    width: 200px;
+    color: white !important;
+    font-weight: bold;
+    border: none;
+    outline: none;
+}

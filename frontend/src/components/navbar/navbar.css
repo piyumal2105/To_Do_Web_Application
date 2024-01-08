@@ -1,0 +1,21 @@
+/* .user-png {
+    width: 100px;
+    height: 100px;
+} */
+
+.navbar-brand {
+  color: rgb(87, 87, 236);
+  font-size: 25px;
+  font-weight: bold;
+}
+
+.btn-nav {
+  background-color: rgb(87, 87, 236);
+  border-radius: 5px;
+  color: white !important;
+  font-weight: bold;
+  margin-left: 10px;
+}
+
+.my-01 {
+}
