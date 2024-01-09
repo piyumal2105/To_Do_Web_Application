@@ -7,11 +7,11 @@ const Navbar = () => {
     <div>
       <nav className="navbar navbar-expand-lg">
         <div className="container">
-          <a className="navbar-brand" href="#">
+          <div className="navbar-brand" href="#">
             <b>
               <GiWhiteBook /> &nbsp; TODO
             </b>
-          </a>
+          </div>
           <button
             className="navbar-toggler"
             type="button"
