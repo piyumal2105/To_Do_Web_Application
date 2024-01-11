@@ -7,9 +7,17 @@ const Update = ({ display }) => {
       <h3>Update Your Task</h3>
       <br />
       <br />
-      <input type="text" className="todo-update-input" />
+      <input
+        type="text"
+        className="todo-update-input p-2"
+        placeholder="Title"
+      />
       <br />
-      <textarea className="todo-update-input" />
+      <textarea
+        type="text"
+        className="todo-update-input p-2"
+        placeholder="Body"
+      />
       <br />
       <div>
         <button className="btn btn-dark my-4">Update</button>

@@ -7,8 +7,18 @@ import Navbar from "./components/navbar/navbar";
 import SignUp from "./components/SignUp/signup";
 import SignIn from "./components/SignUp/signin";
 import Todo from "./components/ToDo/todo";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { authActions } from "./store";
 
 function App() {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    const id = sessionStorage.getItem("id");
+    if (id) {
+      dispatch(authActions.login());
+    }
+  }, []);
   return (
     <div>
       <Router>
