@@ -1,14 +1,29 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import "./todo.css";
 import ToDoCards from "./todoCards";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Update from "./update";
+import axios from "axios";
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { authAction } from "../../store";
+let id = sessionStorage.getItem("id");
 
 const Todo = () => {
   const [Inputs, setInputs] = useState({ title: "", body: "" });
   const [Array, setArray] = useState([]);
+  useEffect(() => {
+    const fetch = async () => {
+      await axios
+        .get(`http://localhost:1000/api/v2/getTask/${id}`)
+        .then((response) => {
+          setArray(response);
+        });
+    };
+    fetch();
+  }, []);
   const show = () => {
     document.getElementById("textarea").style.display = "block";
   };
@@ -16,14 +31,28 @@ const Todo = () => {
     const { name, value } = e.target;
     setInputs({ ...Inputs, [name]: value });
   };
-  const submit = () => {
+  const submit = async () => {
     if (Inputs.title === "" || Inputs.body === "") {
       toast.error("Title Or Body Should Not Be Empty");
     } else {
-      setArray([...Array, Inputs]);
-      setInputs({ title: "", body: "" });
-      toast.success("Your Task Is Added");
-      toast.error("Your Task Is Not Saved ! Please SignUp");
+      if (id) {
+        await axios
+          .post("http://localhost:1000/api/v2/addTask", {
+            title: Inputs.title,
+            body: Inputs.body,
+            id: id,
+          })
+          .then((response) => {
+            console.log(response);
+          });
+        setInputs({ title: "", body: "" });
+        toast.success("Your Task Is Added");
+      } else {
+        setArray([...Array, Inputs]);
+        setInputs({ title: "", body: "" });
+        toast.success("Your Task Is Added");
+        toast.error("Your Task Is Not Saved ! Please SignUp");
+      }
     }
   };
   const del = (id) => {
