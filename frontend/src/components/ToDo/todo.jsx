@@ -26,6 +26,22 @@ const Todo = () => {
   //   fetch();
   // }, []);
 
+  useEffect(() => {
+    const fetch = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:1000/api/v2/getTask/${id}`
+        );
+        console.log("API Response:", response);
+        setArray(response.data); // Assuming the array is in the 'data' property
+      } catch (error) {
+        console.error("Error fetching tasks:", error);
+        // Handle error, e.g., show an error message to the user
+      }
+    };
+    fetch();
+  }, [id]);
+
   const show = () => {
     document.getElementById("textarea").style.display = "block";
   };
@@ -66,22 +82,6 @@ const Todo = () => {
     document.getElementById("todo-update").style.display = value;
   };
 
-  useEffect(() => {
-    const fetch = async () => {
-      try {
-        const response = await axios.get(
-          `http://localhost:1000/api/v2/getTask/${id}`
-        );
-        console.log("API Response:", response);
-        setArray(response.data); // Assuming the array is in the 'data' property
-      } catch (error) {
-        console.error("Error fetching tasks:", error);
-        // Handle error, e.g., show an error message to the user
-      }
-    };
-    fetch();
-  }, [id, submit]);
-
   return (
     <>
       <div className="todo">
@@ -119,6 +119,7 @@ const Todo = () => {
           <div className="container-fluid">
             <div className="row">
               {Array &&
+                Array.length > 0 &&
                 Array.map &&
                 Array.map((item, index) => (
                   <div className="col-lg-3 col-10 mx-5 my-2" key={index}>
