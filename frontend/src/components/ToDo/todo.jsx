@@ -14,16 +14,18 @@ let id = sessionStorage.getItem("id");
 const Todo = () => {
   const [Inputs, setInputs] = useState({ title: "", body: "" });
   const [Array, setArray] = useState([]);
-  useEffect(() => {
-    const fetch = async () => {
-      await axios
-        .get(`http://localhost:1000/api/v2/getTask/${id}`)
-        .then((response) => {
-          setArray(response);
-        });
-    };
-    fetch();
-  }, []);
+
+  // useEffect(() => {
+  //   const fetch = async () => {
+  //     await axios
+  //       .get(`http://localhost:1000/api/v2/getTask/${id}`)
+  //       .then((response) => {
+  //         setArray(response);
+  //       });
+  //   };
+  //   fetch();
+  // }, []);
+
   const show = () => {
     document.getElementById("textarea").style.display = "block";
   };
@@ -32,6 +34,7 @@ const Todo = () => {
     setInputs({ ...Inputs, [name]: value });
   };
   const submit = async () => {
+    console.log("Array Type:", typeof Array);
     if (Inputs.title === "" || Inputs.body === "") {
       toast.error("Title Or Body Should Not Be Empty");
     } else {
@@ -62,6 +65,22 @@ const Todo = () => {
   const dis = (value) => {
     document.getElementById("todo-update").style.display = value;
   };
+
+  useEffect(() => {
+    const fetch = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:1000/api/v2/getTask/${id}`
+        );
+        console.log("API Response:", response);
+        setArray(response.data); // Assuming the array is in the 'data' property
+      } catch (error) {
+        console.error("Error fetching tasks:", error);
+        // Handle error, e.g., show an error message to the user
+      }
+    };
+    fetch();
+  }, [id, submit]);
 
   return (
     <>
@@ -100,6 +119,7 @@ const Todo = () => {
           <div className="container-fluid">
             <div className="row">
               {Array &&
+                Array.map &&
                 Array.map((item, index) => (
                   <div className="col-lg-3 col-10 mx-5 my-2" key={index}>
                     <ToDoCards
@@ -114,6 +134,25 @@ const Todo = () => {
             </div>
           </div>
         </div>
+
+        {/* <div className="todo-body">
+          <div className="container-fluid">
+            <div className="row">
+              {Array &&
+                Array.map((item, index) => (
+                  <div className="col-lg-3 col-10 mx-5 my-2" key={index}>
+                    <ToDoCards
+                      title={item.title}
+                      body={item.body}
+                      id={index}
+                      delid={del}
+                      display={dis}
+                    />
+                  </div>
+                ))}
+            </div>
+          </div>
+        </div> */}
       </div>
       <div className="todo-update" id="todo-update">
         <div className="container update">
